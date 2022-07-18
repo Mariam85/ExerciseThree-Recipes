@@ -1,0 +1,27 @@
+﻿@page
+@model RecipeRazor.Pages.RecipesModel
+@{
+}
+<h1>Create your own recipe</h1>
+<form method="post">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" asp-for="recipe.Title" class="form-control" id="title" placeholder="Enter the title..">
+    </div>
+    <br />
+    <div class="form-group">
+        <label for="ingredients">Ingredients</label>
+        <textarea class="form-control" asp-for="recipe.Ingredients" placeholder="Enter the Ingredients.." id="ingredients" rows="3"></textarea>
+    </div>
+    <br />
+    <div class="form-group">
+        <label for="instructions">Instructions</label>
+        <textarea class="form-control" asp-for="recipe.Instructions" placeholder="Enter the instructions.." id="instructions" rows="3"></textarea>
+    </div>
+    <br />
+    <div class="form-group">
+        <label for="categories">Categories</label>
+        <textarea class="form-control" asp-for="recipe.Categories" placeholder="Enter the categories.." id="categories" rows="3"></textarea>
+    </div>
+    <button class="btn btn-primary mt-1" type="submit">Add recipe</button>
+</form>

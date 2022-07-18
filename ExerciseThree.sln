@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeRazor", "RecipeRazor\RecipeRazor.csproj", "{658E60E0-3A17-42A4-9FB1-C845C1A42B96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{9D776D02-7418-4E6F-94B5-18A66D5BA63A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{658E60E0-3A17-42A4-9FB1-C845C1A42B96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{658E60E0-3A17-42A4-9FB1-C845C1A42B96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{658E60E0-3A17-42A4-9FB1-C845C1A42B96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{658E60E0-3A17-42A4-9FB1-C845C1A42B96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D776D02-7418-4E6F-94B5-18A66D5BA63A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D776D02-7418-4E6F-94B5-18A66D5BA63A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D776D02-7418-4E6F-94B5-18A66D5BA63A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D776D02-7418-4E6F-94B5-18A66D5BA63A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DA1F865D-AA77-4768-A264-7688A61FAE02}
+	EndGlobalSection
+EndGlobal
