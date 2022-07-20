@@ -17,6 +17,10 @@ namespace RecipeRazor.Pages
         {
             var client = _httpClientFactory.CreateClient("Recipes");
             var response = await client.PostAsJsonAsync("recipes/add-recipe", recipe);
+            recipe.Ingredients = recipe.Ingredients[0].Split("\r\n").ToList();
+            recipe.Categories = recipe.Categories[0].Split("\r\n").ToList();
+            recipe.Instructions = recipe.Instructions[0].Split("\r\n").ToList();
+            
             // Todo: check the response status.
             return Redirect("Successful");
         }
