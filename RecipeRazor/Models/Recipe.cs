@@ -3,10 +3,10 @@
     public class Recipe
     {
         public Guid Id { get; set; }
-        public List<string> Ingredients { get; set; } = new List<string>();
+        public List<string> Ingredients { get; set; } = new();
         public string Title { get; set; }
-        public List<string> Instructions { get; set; } = new List<string>();
-        public List<string> Categories { get; set; } = new List<string>();
+        public List<string> Instructions { get; set; } = new();
+        public List<string> Categories { get; set; } = new();
 
         public Recipe(List<string> ingredients, string title, List<string> instructions, List<string> categories)
         {
