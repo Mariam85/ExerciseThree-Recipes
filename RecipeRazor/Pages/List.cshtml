@@ -1,0 +1,58 @@
+@page
+@model RecipeRazor.Pages.ListModel
+@{
+
+}
+<body style="size: 1040px; height: 960px; background: url('https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1776&q=80') no-repeat; background-size: cover ">
+</body>
+<h1>List a recipe</h1>
+<nav class="navbar navbar-expand-sm navbar-light ">
+    <form method="post" class="d-flex">
+        <input class="form-control me-2" asp-for="recipe.Title" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+</nav>
+
+<table class="table table-bordered table-success ">
+    <thead>
+        <tr>
+            <th scope="col">Ingredients</th>
+            <th scope="col">Instructions</th>
+            <th scope="col">Categories</th>
+        </tr>
+    </thead>
+    <tbody>
+        <p class="text-success fw-bold">@Model.numberOfResults results found </p>
+        @foreach (var singleRecipe in Model.foundRecipe)
+        {
+            <tr>
+                <td>
+                    <ul class="list-group">
+                        @foreach (var ingredient in singleRecipe.Ingredients)
+                        {
+                            <li class="list-group-item list-group-item-success border-0 ">  @ingredient </li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <ul class="list-group">
+                        @foreach (var instructions in singleRecipe.Instructions)
+                        {
+                            <li class="list-group-item list-group-item-success border-0">   @instructions </li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <ul class="list-group">
+                        @foreach (var categories in singleRecipe.Categories)
+                        {
+                            <li class="list-group-item list-group-item-success border-0">
+                                @categories
+                            </li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
