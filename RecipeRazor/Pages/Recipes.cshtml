@@ -1,27 +1,34 @@
-﻿@page
+@page
 @model RecipeRazor.Pages.RecipesModel
 @{
 }
-<h1>Create your own recipe</h1>
+<body style="size: 1040px; height: 960px; background: url('https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1776&q=80') no-repeat; background-size: cover ">
+</body>
+
 <form method="post">
-    <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" asp-for="recipe.Title" class="form-control" id="title" placeholder="Enter the title..">
-    </div>
-    <br />
-    <div class="form-group">
-        <label for="ingredients">Ingredients</label>
-        <textarea class="form-control" asp-for="recipe.Ingredients" placeholder="Enter the Ingredients.." id="ingredients" rows="3"></textarea>
-    </div>
-    <br />
-    <div class="form-group">
-        <label for="instructions">Instructions</label>
-        <textarea class="form-control" asp-for="recipe.Instructions" placeholder="Enter the instructions.." id="instructions" rows="3"></textarea>
-    </div>
-    <br />
-    <div class="form-group">
-        <label for="categories">Categories</label>
-        <textarea class="form-control" asp-for="recipe.Categories" placeholder="Enter the categories.." id="categories" rows="3"></textarea>
-    </div>
-    <button class="btn btn-primary mt-1" type="submit">Add recipe</button>
+    <center>
+        <h1>Create your own recipe</h1>
+        <div class="group">
+            <div class="d-inline p-2">
+                <label style="position:relative;left:-215px;">Title</label>
+                <input style="width:470px;" type="text" asp-for="recipe.Title" class="form-control" id="title" placeholder="Enter the title..">
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label style="position:relative;left:-195px;">Ingredients</label>
+            <textarea style="width:470px;" class="form-control" asp-for="recipe.Ingredients" placeholder="Enter the Ingredients.." id="ingredients" rows="3"></textarea>
+        </div>
+        <br />
+        <div class="form-group">
+            <label style="position:relative;left:-195px;">Instructions</label>
+            <textarea style="width:470px;" class="form-control" asp-for="recipe.Instructions" placeholder="Enter the instructions.." id="instructions" rows="3"></textarea>
+        </div>
+        <br />
+        <div class="form-group">
+            <label style="position:relative;left:-195px;">Categories</label>
+            <textarea style="width:470px;" class="form-control" asp-for="recipe.Categories" placeholder="Enter the categories.." id="categories" rows="3"></textarea>
+        </div>
+        <button class="btn btn-primary mt-1" type="submit">Add recipe</button>
+    </center>
 </form>
