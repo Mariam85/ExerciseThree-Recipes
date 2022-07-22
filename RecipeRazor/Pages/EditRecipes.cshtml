@@ -1,0 +1,35 @@
+@page
+@model RecipeRazor.Pages.EditRecipesModel
+@{
+}
+<body style="size: 1040px; height: 960px; background: url('https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1776&q=80') no-repeat; background-size: cover ">
+<h1>Edit Recipe</h1>
+<br>
+<form action="put">
+
+  <h3 class="text-primary">Please select what you want to edit:</h3>
+	<strong>
+	<div  >
+  <input type="radio" id="age0" name="age" value="Title">
+  <label for="age0">Title</label><br>  
+  <input type="radio" id="age1" name="age" value="Ingredients">
+  <label for="age1">Ingredients</label><br>
+  <input type="radio" id="age2" name="age" value="Instructions">
+  <label for="age2">Instructions</label><br>  
+  <input type="radio" id="age3" name="age" value="Categories">
+  <label for="age3">Categories</label><br><br>
+
+  <label for="ff">Enter the new value:</ label>
+	  <br>
+	<textarea style="width:470px;" id="ff" name="ff"></textarea>
+	<br><br>
+  <button class="btn btn-success mt-1" type="submit">Edit</button>
+		</ div>
+		</ strong>
+</form>
+
+
+</body>
+
+
+
