@@ -96,6 +96,22 @@ app.MapGet("recipes", async () =>
     return Results.Ok(recipes);
 });
 
+// Getting the json file content of the categories.
+app.MapGet("categories", async () =>
+{
+    List<Recipe> recipes = await ReadFile();
+    List<string> categories=new();
+    for (int i=0;i<recipes.Count ;i++)
+    {
+        for(int y=0; y < recipes[i].Categories.Count;y++)
+        {
+            if(!categories.Contains(recipes[i].Categories[y]))
+                categories.Add(recipes[i].Categories[y]);
+        } 
+    }
+    return Results.Ok(categories);
+});   
+
 app.Run();
 
 // Reading the json file content.
