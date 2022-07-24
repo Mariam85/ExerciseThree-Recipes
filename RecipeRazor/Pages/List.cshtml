@@ -25,10 +25,11 @@
     </thead>
     <tbody>
         <p class="text-success fw-bold">@Model.numberOfResults results found </p>
+        @{int i = 1;}
         @foreach (var singleRecipe in Model.foundRecipe)
         {
         <tr>
-            <th scope="row"></th>
+            <th scope="row">@(i++)</th>
             <td>
                 <ul class="list-group">
                     @foreach (var ingredient in singleRecipe.Ingredients)
