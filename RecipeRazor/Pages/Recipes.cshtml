@@ -2,38 +2,78 @@
 @model RecipeRazor.Pages.AddRecipesModel
 @{
 }
-<body style="size: 1040px; height: 960px; background: url('https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1776&q=80') no-repeat; background-size: cover ">
-</body>
+<style>
+    body {
+        background: no-repeat;
+        background-size: cover;
+        height: 960px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    p {
+        text-align: center;
+    }
+
+    div {
+        text-align: center;
+    }
+</style>
+
+<script type="text/javascript">
+    const imgs = [];
+    imgs[0] = 'https://images.unsplash.com/photo-1632431455870-65dd9cf75e0e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80';
+    imgs[1] = 'https://images.unsplash.com/photo-1632436638809-f89272c90f64?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80';
+    imgs[2] = 'https://images.unsplash.com/photo-1633378217782-cbee9b307853?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80';
+    imgs[3] = 'https://images.unsplash.com/photo-1495195129352-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80';
+    imgs[4] = 'https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1776&q=80';
+    imgs[5] = 'https://images.unsplash.com/photo-1619367302084-3d07eb49159f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80';
+
+    window.onload = function () {
+        const random = Math.floor(Math.random() * imgs.length);
+        document.body.style.backgroundImage = `url(${imgs[random]})`;
+
+    }
+</script>
+
 <form method="post">
-    <center>
-        <h1>Create your own recipe</h1>
-            <div class="d-inline p-2">
-                <strong>
-                    <label style="position:relative;left:-215px;">Title</label>
-                </strong>
-                <input style="width:470px;" type="text" asp-for="recipe.Title" class="form-control" id="title" placeholder="Enter the title..">
-            </div>
-        <br />
-        <div class="form-group">
-            <strong>
-                <label style="position:relative;left:-195px;">Ingredients</label>
-            </strong>
-            <textarea style="width:470px;" class="form-control" asp-for="recipe.Ingredients" placeholder="Enter the Ingredients.." id="ingredients" rows="3"></textarea>
-        </div>
-        <br />
-        <div class="form-group">
-            <strong>
-                <label style="position:relative;left:-195px;">Instructions</label>
-            </strong>
-            <textarea style="width:470px;" class="form-control" asp-for="recipe.Instructions" placeholder="Enter the instructions.." id="instructions" rows="3"></textarea>
-        </div>
-        <br />
-        <div class="form-group">
-            <strong>
-                <label style="position:relative;left:-195px;">Categories</label>
-            </strong>
-            <textarea style="width:470px;" class="form-control" asp-for="recipe.Categories" placeholder="Enter the categories.." id="categories" rows="3"></textarea>
-        </div>
-        <button class="btn btn-primary mt-1" type="submit">Add recipe</button>
-    </center>
+    <h1>Create your own recipe</h1>
+    <div class="d-inline p-2">
+        <strong>
+            <label style="position:relative;left:-215px;">Title</label>
+        </strong>
+        <input style="position: relative; right: -407px; width: 470px;" type="text" asp-for="recipe.Title" class="form-control" id="title" placeholder="Enter the title..">
+    </div>
+    <br />
+    <div class="form-group">
+        <strong>
+            <label style="position:relative;left:-195px;">Ingredients</label>
+        </strong>
+        <textarea style="position: relative; right: -407px; width: 470px;" class="form-control" asp-for="recipe.Ingredients" placeholder="Enter the Ingredients.." id="ingredients" rows="3"></textarea>
+    </div>
+    <br />
+    <div class="form-group">
+        <strong>
+            <label style="position:relative;left:-195px;">Instructions</label>
+        </strong>
+        <textarea style="position: relative; right: -407px; width: 470px; " class="form-control" asp-for="recipe.Instructions" placeholder="Enter the instructions.." id="instructions" rows="3"></textarea>
+    </div>
+    <br />
+    <div class="form-group">
+        <strong>
+            <label style="position:relative;left:-195px;">Categories</label>
+
+            <br>
+            @foreach (var c in Model.categ)
+            {
+            <input type="checkbox" style="position:relative;left:-195px;" id="title" name="data" value="data">
+            <label style="position:relative;left:-195px;" for="title">@c</label>
+            <br>
+            }
+            <br />
+        </strong>
+    </div>
+    <button class="btn btn-primary mt-1" type="submit">Add recipe</button>
 </form>
