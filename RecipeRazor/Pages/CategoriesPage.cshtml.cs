@@ -10,26 +10,28 @@ namespace RecipeRazor.Pages
         public CategoriesPageModel(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
 
         [BindProperty]
-        public List<string> categories { get; set; } = new List<string>();
-        public Recipe recipe { get; set; }
-        public IEnumerable<Recipe> foundRecipe { get; set; } = new List<Recipe>();
-        public string numberOfResults { get; set; } = "";
+        public List<string> categories { get; set; } = new();
 
-        public async Task<IActionResult> OnPostUpdate(string newCategory,string oldCategory)
-        {
-            return Page();
-   
-        }
-
-        public async Task<IActionResult> OnPostDelete()
-        {
-            return Page();
-
-        }
-        public async Task OnGet()
+        public async Task<IActionResult> OnPostDelete(string deletedValue)
         {
             var client = _httpClientFactory.CreateClient("Recipes");
             categories = await client.GetFromJsonAsync<List<string>>("categories");
+            var response = await client.DeleteAsync($"recipes/remove-category/{categories[Int32.Parse(deletedValue)]}");
+            return RedirectToPage("./CategoriesPage");
+        }
+        public async Task<IActionResult> OnGet()
+        {
+            var client = _httpClientFactory.CreateClient("Recipes");
+            categories = await client.GetFromJsonAsync<List<string>>("categories");
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostUpdate(string newCategory, string oldValue)
+        {
+            var client = _httpClientFactory.CreateClient("Recipes");
+            categories = await client.GetFromJsonAsync<List<string>>("categories");
+            var response = await client.PutAsync($"recipes/rename-category?oldName={categories[Int32.Parse(oldValue)]}&newName={newCategory}", null);
+            return RedirectToPage("./CategoriesPage");
         }
     }
 }
