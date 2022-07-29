@@ -12,16 +12,18 @@ namespace RecipeRazor.Pages
         [BindProperty]
         public List<Recipe> recipesList { get; set; } = new List<Recipe>();
 
-        public async Task OnGet()
+        public async Task<IActionResult> OnGet()
         {
             var client = _httpClientFactory.CreateClient("Recipes");
             recipesList = await client.GetFromJsonAsync<List<Recipe>>("recipes");
+            return Page();
         }
-        public async Task OnPostUpdate(string info)
+
+        public async Task<IActionResult> OnPostUpdate(Guid id, string choiceEdit, string afterEdit)
         {
             var client = _httpClientFactory.CreateClient("Recipes");
-            recipesList = await client.GetFromJsonAsync<List<Recipe>>("recipes");
-            // Get the required recipe.
+            var response = await client.PutAsync($"recipes/edit-recipe/{id}?attributeName={choiceEdit}&editedParameter={afterEdit}", null);
+            return RedirectToPage("./EditRecipes");
         }
     }
 }
