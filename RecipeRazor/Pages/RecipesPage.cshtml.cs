@@ -13,21 +13,34 @@ namespace RecipeRazor.Pages
         [BindProperty]
         public Recipe recipe { get; set; }
         public List<string> categ { get; set; } = new List<string>();
+        public List<string> alerts = new();
 
-        public async Task OnGet()
+    public async Task OnGet(List<string> messages)
+    {
+        var client = _httpClientFactory.CreateClient("Recipes");
+        categ = await client.GetFromJsonAsync<List<string>>("categories");
+        alerts = messages;
+    }
+    public async Task<IActionResult> OnPost(List<string> data)
+    {
+        var client = _httpClientFactory.CreateClient("Recipes");
+        WebApplication3.Models.RecipesValidator validator = new();
+        recipe.Categories = data;
+        ValidationResult results = validator.Validate(recipe);
+        if (results.IsValid)
         {
-            var client = _httpClientFactory.CreateClient("Recipes");
-            categ = await client.GetFromJsonAsync<List<string>>("categories");
-        }
-        public async Task<IActionResult> OnPost(List<string> data)
-        {
-            var client = _httpClientFactory.CreateClient("Recipes");
             recipe.Ingredients = recipe.Ingredients[0].Split("\r\n").ToList();
             recipe.Instructions = recipe.Instructions[0].Split("\r\n").ToList();
-            recipe.Categories = data;
             var response = await client.PostAsJsonAsync("recipes/add-recipe", recipe);
-            // Todo: check the response status.
-            return Page();
         }
+        else
+        {
+            recipe = new();
+            Console.WriteLine("an error has occured");
+            List<string> messages = new();
+            //Todo: add failure messages.
+        }
+        return RedirectToPage("./RecipesPage");
+    }
     }
 }
