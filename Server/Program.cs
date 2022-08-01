@@ -2,7 +2,18 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    options.RoutePrefix = string.Empty;
+});
 
 // Adding a recipe.
 app.MapPost("recipes/add-recipe", async (Recipe recipe) =>
@@ -20,8 +31,15 @@ app.MapPost("recipes/add-recipe", async (Recipe recipe) =>
 // Editing a recipe.
 app.MapPut("recipes/edit-recipe/{id}", async (Guid id, string attributeName, string editedParameter) =>
 {
+    // Input format -value \n -value.
     List<Recipe> recipes = await ReadFile();
-    List<string> newValue = editedParameter.Split(",").ToList();
+
+    List<string> newValue = editedParameter.Split("-").ToList();
+    newValue.Remove(newValue[0]);
+    for (int i = 0; i < newValue.Count(); i++)
+    {
+        newValue[i] = newValue[i].Trim();
+    }
 
     if (attributeName == "Title")
     {
@@ -67,8 +85,10 @@ app.MapPut("recipes/rename-category", async (string oldName, string newName) =>
     {
         foreach (Recipe r in beforeRename)
         {
-            r.Categories.Remove(oldName);
-            r.Categories.Add(newName);
+            int index = r.Categories.FindIndex(cat => cat == oldName);
+
+            if (index != -1)
+                r.Categories[index] = newName;
         }
         UpdateFile(recipes);
         return Results.Ok("Successfully updated");
@@ -80,8 +100,26 @@ app.MapPut("recipes/rename-category", async (string oldName, string newName) =>
 app.MapDelete("recipes/remove-category/{category}", async (string category) =>
 {
     List<Recipe> recipes = await ReadFile();
-    int removed = recipes.RemoveAll(r => r.Categories.Contains(category));
-    if (removed > 0)
+    bool found = false;
+
+    foreach (Recipe r in recipes.ToList())
+    {
+        if (r.Categories[0] == category && r.Categories.Count == 1)
+        {
+            Console.WriteLine("hnaaa");
+            found = true;
+            recipes.Remove(r);
+        }
+        else
+        {
+            if (r.Categories.Contains(category))
+            {
+                found = true;
+                r.Categories.Remove(category);
+            }
+        }
+    }
+    if (found)
     {
         UpdateFile(recipes);
         return Results.Ok("Successfully deleted");
@@ -100,17 +138,17 @@ app.MapGet("recipes", async () =>
 app.MapGet("categories", async () =>
 {
     List<Recipe> recipes = await ReadFile();
-    List<string> categories=new();
-    for (int i=0;i<recipes.Count ;i++)
+    List<string> categories = new();
+    for (int i = 0; i < recipes.Count; i++)
     {
-        for(int y=0; y < recipes[i].Categories.Count;y++)
+        for (int y = 0; y < recipes[i].Categories.Count; y++)
         {
-            if(!categories.Contains(recipes[i].Categories[y]))
+            if (!categories.Contains(recipes[i].Categories[y]))
                 categories.Add(recipes[i].Categories[y]);
-        } 
+        }
     }
     return Results.Ok(categories);
-});   
+});
 
 app.Run();
 
@@ -134,5 +172,4 @@ static async void UpdateFile(List<Recipe> newRecipes)
     var options = new JsonSerializerOptions { WriteIndented = true };
     File.WriteAllText(sFilePath, System.Text.Json.JsonSerializer.Serialize(newRecipes));
 }
-
 
