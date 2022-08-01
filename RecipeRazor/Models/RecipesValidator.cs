@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 namespace WebApplication3.Models
-
 {
     public class RecipesValidator : AbstractValidator<Recipe>
     {
