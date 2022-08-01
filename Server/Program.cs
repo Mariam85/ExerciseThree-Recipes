@@ -156,7 +156,7 @@ app.Run();
 static async Task<List<Recipe>> ReadFile()
 {
     string sCurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-    string sFile = System.IO.Path.Combine(sCurrentDirectory, @"..\..\..\" + "Text.json");
+    string sFile = System.IO.Path.Combine(Environment.CurrentDirectory , "Text.json");
     string sFilePath = Path.GetFullPath(sFile);
     string jsonString = await File.ReadAllTextAsync(sFilePath);
     List<Recipe>? menu = System.Text.Json.JsonSerializer.Deserialize<List<Recipe>>(jsonString);
@@ -167,7 +167,7 @@ static async Task<List<Recipe>> ReadFile()
 static async void UpdateFile(List<Recipe> newRecipes)
 {
     string sCurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-    string sFile = System.IO.Path.Combine(sCurrentDirectory, @"..\..\..\" + "Text.json");
+    string sFile = System.IO.Path.Combine(Environment.CurrentDirectory + "Text.json");
     string sFilePath = Path.GetFullPath(sFile);
     var options = new JsonSerializerOptions { WriteIndented = true };
     File.WriteAllText(sFilePath, System.Text.Json.JsonSerializer.Serialize(newRecipes));
