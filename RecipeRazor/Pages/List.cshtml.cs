@@ -12,14 +12,23 @@ namespace RecipeRazor.Pages
         [BindProperty]
         public Recipe recipe { get; set; }
         public IEnumerable<Recipe> foundRecipe { get; set; } = new List<Recipe>();
-        public string numberOfResults { get; set; } ="";
+        public string numberOfResults { get; set; } = "";
 
         public async Task<IActionResult> OnPost()
         {
             var client = _httpClientFactory.CreateClient("Recipes");
+            try
+            {
+                await client.GetFromJsonAsync<List<Recipe>>($"recipes/list-recipe/{recipe.Title}");
+            }
+            catch
+            {
+                numberOfResults = "no results";
+                return Page();
+            }
             foundRecipe = await client.GetFromJsonAsync<List<Recipe>>($"recipes/list-recipe/{recipe.Title}");
-            int results = foundRecipe.Count();
-            numberOfResults= results.ToString();
+            int num = foundRecipe.Count();
+            numberOfResults = num.ToString();
             return Page();
         }
     }
