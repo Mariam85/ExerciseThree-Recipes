@@ -2,67 +2,112 @@
 @model RecipeRazor.Pages.RecipesPageModel
 @{
 }
+<script type="text/javascript">
+    const imgs = [];
+    imgs[0] = 'https://images.unsplash.com/photo-1632431455870-65dd9cf75e0e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80';
+    imgs[1] = 'https://images.unsplash.com/photo-1632436638809-f89272c90f64?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80';
+    imgs[2] = 'https://images.unsplash.com/photo-1633378217782-cbee9b307853?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80';
+    imgs[3] = 'https://images.unsplash.com/photo-1495195129352-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80';
+    imgs[4] = 'https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1776&q=80';
+    imgs[5] = 'https://images.unsplash.com/photo-1619367302084-3d07eb49159f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80';
+
+    window.onload = function () {
+        const random = Math.floor(Math.random() * imgs.length);
+        document.body.style.backgroundImage = `url(${imgs[random]})`;
+    }
+</script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if (@Model.alerts.Any())
+{
+    @foreach (var msg in Model.alerts)
+    {
+        @if (msg == "error")
+        {
+            <script type="text/javascript">
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to add recipe...',
+                    text: 'Some/All of the parameters are empty.',
+                    confirmButtonColor: '#198754'
+                })
+            </script>
+        }
+        @if (msg == "no error")
+        {
+            <script type="text/javascript">
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully added!',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#198754'
+                });
+            </script>
+        }
+    }
+}
+
 <body style="size: 1040px; height: 960px; background: url('https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1776&q=80') no-repeat; background-size: cover ">
-</body>
-<h4 class="display-2 text-dark font-weight-bold">Recipes</h4>
-<br>
-<br>
-<center>
-    <div>
-        <h2>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="text-primary bi bi-pencil-fill" viewBox="0 0 16 16">
-                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-            </svg> <a style="display: inline-block;" class="nav-link text-dark" asp-area="" asp-page="/EditRecipes">Edit recipe</a>
-            <br />
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill text-success" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-            </svg> <a style="display: inline-block;" class="nav-link text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Add recipe</a>
-            <br />
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search text-danger" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-            </svg> <a style="display: inline-block;" class="nav-link text-dark" asp-area="" asp-page="/List">List recipe</a>
-            <br />
-        </h2>
-    </div>
-</center>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form method="post">
-                <div class="modal-header">
-                    <h5 class="modal-title text-success" id="exampleModalLabel">Create your own recipe</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="fw-bold">Title</label>
-                        <input class="border" style="width: 470px;" type="text" asp-for="recipe.Title" class="form-control" id="title" placeholder="Enter the title..">
+    <h4 class="display-2 text-dark font-weight-bold">Recipes</h4>
+    <br><br>
+    <center>
+        <div>
+            <h2>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="text-primary bi bi-pencil-fill" viewBox="0 0 16 16">
+                    <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+                </svg> <a style="display: inline-block;" class="nav-link text-dark" asp-area="" asp-page="/EditRecipes">Edit recipe</a>
+                <br />
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill text-success" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                </svg> <a style="display: inline-block;" class="nav-link text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Add recipe</a>
+                <br />
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search text-danger" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                </svg> <a style="display: inline-block;" class="nav-link text-dark" asp-area="" asp-page="/List">List recipe</a>
+                <br />
+            </h2>
+        </div>
+    </center>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-success" id="exampleModalLabel">Create your own recipe</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="mb-3">
-                        <label class="fw-bold">Ingredients</label>
-                        <textarea class="border" style="width: 470px;" asp-for="recipe.Ingredients" placeholder="Enter the ingredients.." id="ingredients" rows="3"></textarea>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="fw-bold">Title</label>
+                            <input class="border" style="width: 470px;" type="text" asp-for="recipe.Title" class="form-control" id="title" placeholder="Enter the title..">
+                        </div>
+                        <div class="mb-3">
+                            <label class="fw-bold">Ingredients</label>
+                            <textarea class="border" style="width: 470px;" asp-for="recipe.Ingredients" placeholder="Enter the ingredients.." id="ingredients" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="fw-bold">Instructions</label>
+                            <textarea class="border" style="width: 470px;" asp-for="recipe.Instructions" placeholder="Enter the instructions.." id="instructions" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <strong>
+                                <label class="fw-bold">Categories</label><br>
+                            </strong>
+                            @foreach (var c in Model.categ)
+                            {
+                                <input type="checkbox" id="title" name="data" value="@c">
+                                <label for="title">@c</label>
+                                <br>
+                            }
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="fw-bold">Instructions</label>
-                        <textarea class="border" style="width: 470px;" asp-for="recipe.Instructions" placeholder="Enter the instructions.." id="instructions" rows="3"></textarea>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" id="button" class="btn btn-primary">Save</button>
                     </div>
-                    <div class="mb-3">
-                        <strong>
-                            <label class="fw-bold">Categories</label><br>
-                        </strong>
-                        @foreach (var c in Model.categ)
-                        {
-                            <input type="checkbox" id="title" name="data" value="@c">
-                            <label for="title">@c</label>
-                            <br>
-                        }
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+</body>
