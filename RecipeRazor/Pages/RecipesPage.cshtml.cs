@@ -1,20 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RecipeRazor.Models;
+using FluentValidation.Results;
+namespace RecipeRazor.Pages;
 
-namespace RecipeRazor.Pages
+public class RecipesPageModel : PageModel
 {
-    public class RecipesPageModel : PageModel
-    {
-        private readonly IHttpClientFactory _httpClientFactory;
-        public RecipesPageModel(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
+    private readonly IHttpClientFactory _httpClientFactory;
+    public RecipesPageModel(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
 
-        // Allows us to create recipes from our custom recipe view.
-        [BindProperty]
-        public Recipe recipe { get; set; }
-        public List<string> categ { get; set; } = new List<string>();
-        public List<string> alerts = new();
-
+    // Allows us to create recipes from our custom recipe view.
+    [BindProperty]
+    public Recipe recipe { get; set; }
+    public List<string> categ { get; set; } = new List<string>();
+    public List<string> alerts = new();
     public async Task OnGet(List<string> messages)
     {
         var client = _httpClientFactory.CreateClient("Recipes");
@@ -32,15 +31,19 @@ namespace RecipeRazor.Pages
             recipe.Ingredients = recipe.Ingredients[0].Split("\r\n").ToList();
             recipe.Instructions = recipe.Instructions[0].Split("\r\n").ToList();
             var response = await client.PostAsJsonAsync("recipes/add-recipe", recipe);
+            if (!response.IsSuccessStatusCode)
+            {
+                alerts.Add("error");
+            }
+            else
+            {
+                alerts.Add("no error");
+            }
         }
         else
         {
-            recipe = new();
-            Console.WriteLine("an error has occured");
-            List<string> messages = new();
-            //Todo: add failure messages.
+            alerts.Add("error");
         }
-        return RedirectToPage("./RecipesPage");
-    }
+        return RedirectToPage("./RecipesPage", new { messages = alerts });
     }
 }
