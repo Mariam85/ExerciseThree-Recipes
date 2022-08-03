@@ -17,6 +17,7 @@ namespace RecipeRazor.Pages
             var client = _httpClientFactory.CreateClient("Recipes");
             categories = await client.GetFromJsonAsync<List<string>>("categories");
             var response = await client.DeleteAsync($"recipes/remove-category/{categories[Int32.Parse(deletedValue)]}");
+            System.Threading.Thread.Sleep(1500);
             return RedirectToPage("./CategoriesPage");
         }
         public async Task<IActionResult> OnGet()
@@ -31,6 +32,7 @@ namespace RecipeRazor.Pages
             var client = _httpClientFactory.CreateClient("Recipes");
             categories = await client.GetFromJsonAsync<List<string>>("categories");
             var response = await client.PutAsync($"recipes/rename-category?oldName={categories[Int32.Parse(oldValue)]}&newName={newCategory}", null);
+            System.Threading.Thread.Sleep(1500);
             return RedirectToPage("./CategoriesPage");
         }
     }
