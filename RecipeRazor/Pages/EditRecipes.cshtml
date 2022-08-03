@@ -3,11 +3,49 @@
 @{
 }
 <script type="text/javascript">
-    function update(el) {
-        $('input[name=info]').val(($(el).closest('tr').index()).toString());
+    const imgs = [];
+    imgs[0] = 'https://images.unsplash.com/photo-1632431455870-65dd9cf75e0e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80';
+    imgs[1] = 'https://images.unsplash.com/photo-1632436638809-f89272c90f64?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80';
+    imgs[2] = 'https://images.unsplash.com/photo-1633378217782-cbee9b307853?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80';
+    imgs[3] = 'https://images.unsplash.com/photo-1495195129352-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80';
+    imgs[4] = 'https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1776&q=80';
+    imgs[5] = 'https://images.unsplash.com/photo-1619367302084-3d07eb49159f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80';
+
+    window.onload = function () {
+        const random = Math.floor(Math.random() * imgs.length);
+        document.body.style.backgroundImage = `url(${imgs[random]})`;
     }
- }
 </script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if (@Model.isError.Any())
+{
+    @foreach (var msg in Model.isError)
+    {
+        @if (msg == "1" || msg == "2")
+        {
+            <script type="text/javascript">
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to edit',
+                    text: 'make sure you pick an attribute and a new value.',
+                    confirmButtonColor: '#198754'
+                })
+            </script>
+        }
+        @if (msg == "a" || msg == "b")
+        {
+            <script type="text/javascript">
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully edited!',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#198754'
+                });
+            </script>
+        }
+    }
+}
 
 <body style="size: 1040px; height: 960px; background: url('https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1776&q=80') no-repeat; background-size: cover ">
     <h1>Edit Recipe</h1>
@@ -79,7 +117,9 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="modal fade" id="@("id"+recipe.Id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
                     <div class="modal-dialog modal-dialog-scrollable">
                         <div class="modal-content">
                             <form>
